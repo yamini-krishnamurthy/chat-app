@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 
+import ChatHeader from './ChatHeader'
+
 class Chat extends Component {
   render() {
     return (
       <div className="chat">
-        Chat
+        <ChatHeader />
       </div>
     )
   }
