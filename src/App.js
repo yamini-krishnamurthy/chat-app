@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-
 import './App.css'
+
 import Main from './Main'
+import SignIn from './SignIn'
 
 class App extends Component {
   constructor() {
@@ -9,17 +10,23 @@ class App extends Component {
 
     this.state = {
       user: {
-        uid: 'fghj',
-        displayName: 'Charlene',
-        email: 'ohGod@why.com',
+        uid: '',
+        displayName: '',
       }
     }
   }
 
+  signIn = (user) => {
+    this.setState({
+      user: user,
+    })
+  }
+
   render() {
+    let element = this.state.user.displayName == '' ? <SignIn signIn={this.signIn}/> : <Main user={this.state.user} />
     return (
       <div className="App">
-        <Main user={this.state.user}/>
+        {element}
       </div>
     )
   }
