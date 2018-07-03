@@ -9,7 +9,7 @@ const Message = (props) => {
       <div className="details" style={styles.details}>
         <div className="Metadata" style={styles.metaData}>
           <div className="user" style={styles.user}>{props.message.user.displayName}</div>
-          <div className="time" style={styles.time}>{Date.now()}</div>
+          <div className="time" style={styles.time}>2:40</div>
         </div>
         <div className="body">
           {props.message.body}
