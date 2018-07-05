@@ -1,16 +1,14 @@
 import React from 'react'
 
 import Avatar from './Avatar'
+import Metadata from './Metadata'
 
 const Message = (props) => {
   return (
     <div className="Message" style={styles.message}>
-      <Avatar user={props.user} />
+      <Avatar user={props.message.user} />
       <div className="details" style={styles.details}>
-        <div className="Metadata" style={styles.metaData}>
-          <div className="user" style={styles.user}>{props.message.user.email}</div>
-          <div className="time" style={styles.time}>2:40</div>
-        </div>
+        <Metadata message={props.message} />
         <div className="body">
           {props.message.body}
         </div>
@@ -29,24 +27,6 @@ const styles = {
   details: {
     flex: 1,
     paddingLeft: '0.5rem',
-  },
-
-  metaData: {
-    display: 'flex',
-    alignItems: 'baseline',
-  },
-
-  user: {
-    flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    fontWeight: 'bold',
-    marginRight: '0.5rem',
-  },
-
-  time: {
-    color: '#999',
-    fontSize: '0.8rem',
   },
 }
 
