@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Avatar = (props) => {
-  console.log(props.user)
   const imageUrl = `https://api.adorable.io/avatars/40/${props.user.email}.png`
 
   return (

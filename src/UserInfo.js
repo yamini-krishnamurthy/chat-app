@@ -4,14 +4,13 @@ import Avatar from './Avatar'
 import SignOutButton from './SignOutButton'
 
 const UserInfo = (props) => {
-  console.log(props.user.email)
   return (
     <div className="UserInfo" style={styles.userInfo}>
       <Avatar user={props.user}/>
       <div className="user" style={styles.user}>
         {props.user.email}
       </div>
-      <SignOutButton />
+      <SignOutButton signOut={props.signOut}/>
     </div>
   )
 }
