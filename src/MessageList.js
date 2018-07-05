@@ -10,7 +10,7 @@ const MessageList = (props) => {
           <p>This is the very beginning of the #general room.</p>
       </div>
         {props.messages.map(msg => (
-          <Message key={msg.id} message={msg} /> 
+          <Message key={msg.id} user={props.user} message={msg} /> 
         ))}
     </div>
   )

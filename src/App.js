@@ -11,7 +11,7 @@ class App extends Component {
     this.state = {
       user: {
         uid: '',
-        displayName: '',
+        email: '',
       }
     }
   }
@@ -23,7 +23,7 @@ class App extends Component {
   }
 
   render() {
-    let element = this.state.user.displayName == '' ? <SignIn signIn={this.signIn}/> : <Main user={this.state.user} />
+    let element = this.state.user.email == '' ? <SignIn signIn={this.signIn}/> : <Main user={this.state.user} />
     return (
       <div className="App">
         {element}

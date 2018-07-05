@@ -2,20 +2,20 @@ import React, { Component } from 'react'
 
 class SignIn extends Component {
   state = {
-    username: '',
+    email: '',
   }
 
   handleChange = (event) => {
     this.setState({
-      username: event.target.value,
+      email: event.target.value,
     })
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
     const user = {
-      uid: Date.now(),
-      displayName: this.state.username,
+      uid: 'hGHjnb789',
+      email: this.state.email,
     }
     this.props.signIn(user)
   }
@@ -25,10 +25,10 @@ class SignIn extends Component {
       <form onSubmit={this.handleSubmit}>
         <input 
           type="text"
-          placeholder="Enter your username..."
+          placeholder="Enter your email..."
           autoFocus
           required
-          value={this.state.username}
+          value={this.state.email}
           onChange={this.handleChange}
         />
         <button type="submit">
@@ -38,5 +38,6 @@ class SignIn extends Component {
     )
   }
 }
+
 
 export default SignIn
