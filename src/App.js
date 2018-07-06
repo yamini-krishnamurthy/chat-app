@@ -30,7 +30,6 @@ class App extends Component {
   }
 
   isSignedIn = () => {
-    console.log(this.state.user.uid)
     return this.state.user.uid
   }
 
