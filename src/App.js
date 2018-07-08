@@ -12,35 +12,32 @@ class App extends Component {
     this.state = {
       user: {},
     }
-  }
 
-  googleSignIn = () => {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    firebase.auth().signInWithPopup(provider).then((result) => {
-      // The signed-in user info.
-      const googleUser = result.user
-      const user = {
-        displayName: googleUser.displayName,
-        email: googleUser.email,
-        uid: googleUser.uid,
+    //listener for change in auth state
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const googleUser = {
+          displayName: user.displayName,
+          email: user.email,
+          uid: user.uid,
+        }
+        this.setState({
+          user: googleUser,
+        })
+      } else {
+        this.setState({
+          user: {}
+        })
       }
-      this.setState({
-        user,
-      })
-    }).catch(function(error) {
     })
   }
-
 
   signOut = () => {
     firebase.auth().signOut().then(() => {
       // Sign-out successful.
     }).catch(function(error) {
-      console.log('fail')
+      //Sign-out unsuccessful.
     });
-    this.setState({
-      user: {}
-    })
   }
 
   isSignedIn = () => {
@@ -48,7 +45,7 @@ class App extends Component {
   }
 
   render() {
-    let element = this.isSignedIn() ? <Main signOut={this.signOut} user={this.state.user} /> : <SignIn googleSignIn={this.googleSignIn}/>
+    let element = this.isSignedIn() ? <Main signOut={this.signOut} user={this.state.user} /> : <SignIn />
       return (
         <div className="App">
           {element}

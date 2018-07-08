@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import firebase from 'firebase'
 
 class SignIn extends Component {
   handleGoogle = ()  => {
-    this.props.googleSignIn()
+    const provider = new firebase.auth.GoogleAuthProvider()
+    firebase.auth().signInWithPopup(provider)
   }
 
   render() {

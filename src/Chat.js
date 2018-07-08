@@ -27,6 +27,8 @@ class Chat extends Component {
  
   addMessage = (body) => {
     const messages = [...this.state.messages]
+    console.log(this.props.user)
+  
     const user = this.props.user
     const msg = {id: `${user.uid}-${Date.now()}`, user, body}
 
