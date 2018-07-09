@@ -1,9 +1,13 @@
 {
   "name": "chat-app",
+  "homepage": "https://chat-app-507aa.firebaseapp.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "aphrodite": "^2.2.2",
+    "firebase": "^5.2.0",
+    "firebase-tools": "^3.19.3",
+    "re-base": "^3.2.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4"
