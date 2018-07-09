@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, from 'react'
 
 import UserInfo from './UserInfo'
 import RoomList from './RoomList'
@@ -10,7 +10,7 @@ const Sidebar = (props) => {
       <h1 style={styles.h1}>
         XTBC 18
       </h1>
-      <RoomList />
+      <RoomList rooms={props.rooms}/>
     </aside>
   )
 }
