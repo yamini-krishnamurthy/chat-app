@@ -13,18 +13,14 @@ class Chat extends Component {
     }
   }
 
-  componentWillMount = () => {
-    this.ref = base.syncState(`messages`, {
+  componentDidMount = () => {
+    base.syncState(`messages`, {
       context: this,
       state: `messages`,
       asArray: true,
     });
   }
 
-  componentWillUnmount = () => {
-    base.removeBinding(this.ref)
-  }
- 
   addMessage = (body) => {
     const messages = [...this.state.messages]
     const user = this.props.user
