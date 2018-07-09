@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
 
+import SignInWithPassword from './SignInWithPassword'
+
 class SignIn extends Component {
   handleGoogle = ()  => {
     const provider = new firebase.auth.GoogleAuthProvider()
@@ -9,7 +11,10 @@ class SignIn extends Component {
 
   render() {
     return (
-      <button onClick={this.handleGoogle}>Sign In With Google</button>
+      <div className="SignIn">
+        <button onClick={this.handleGoogle}>Sign In With Google</button>
+        <SignInWithPassword setUserState={this.props.setUserState}/>
+      </div>  
     )
   }
 }

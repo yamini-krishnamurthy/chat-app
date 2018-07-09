@@ -16,19 +16,28 @@ class App extends Component {
     //listener for change in auth state
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        const googleUser = {
-          displayName: user.displayName,
-          email: user.email,
-          uid: user.uid,
-        }
         this.setState({
-          user: googleUser,
+          user: {
+            displayName: user.displayName,
+            email: user.email,
+            uid: user.uid,
+          }
         })
       } else {
         this.setState({
           user: {}
         })
       }
+    })
+  }
+
+  setUserState = (email, displayName, uid) => {
+    this.setState({
+      user: {
+        email,
+        displayName,
+        uid,
+        }
     })
   }
 
@@ -45,7 +54,7 @@ class App extends Component {
   }
 
   render() {
-    let element = this.isSignedIn() ? <Main signOut={this.signOut} user={this.state.user} /> : <SignIn />
+    let element = this.isSignedIn() ? <Main signOut={this.signOut} user={this.state.user} /> : <SignIn setUserState={this.setUserState}/>
       return (
         <div className="App">
           {element}
