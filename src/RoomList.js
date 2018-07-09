@@ -4,6 +4,7 @@ import { StyleSheet, css } from 'aphrodite'
 import Room from './Room'
 
 const RoomList = (props) => {
+  console.log(props.setCurrentRoom)
   return (
     <nav
       className={`RoomList ${css(styles.roomList)}`}
@@ -14,7 +15,7 @@ const RoomList = (props) => {
       <ul className={css(styles.list)}>
         {
           Object.keys(props.rooms).map(
-            roomName => <Room roomName={roomName} key={roomName} />
+            roomName => <Room roomName={roomName} key={roomName} setCurrentRoom={props.setCurrentRoom}/>
           )
         }
       </ul>
