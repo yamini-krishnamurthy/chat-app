@@ -40,8 +40,8 @@ class Chat extends Component {
   render() {
     return (
       <div className="chat" style={styles.chat}>
-        <ChatHeader />
-        <MessageList messages={this.state.messages} user={this.props.user}/>
+        <ChatHeader room={this.props.room}/>
+        <MessageList room={this.props.room} messages={this.state.messages} user={this.props.user}/>
         <MessageForm addMessage={this.addMessage}/>
       </div>
     )
