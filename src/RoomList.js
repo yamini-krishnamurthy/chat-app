@@ -4,7 +4,6 @@ import { StyleSheet, css } from 'aphrodite'
 import Room from './Room'
 
 const RoomList = (props) => {
-  console.log(props.setCurrentRoom)
   return (
     <nav
       className={`RoomList ${css(styles.roomList)}`}

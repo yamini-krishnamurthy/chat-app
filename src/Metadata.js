@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Metadata = (props) => {
+  console.log(props.message.user.displayName)
   return (
     <div className="Metadata" style={styles.metadata}>
       <div style={styles.user}>{props.message.user.displayName}</div>

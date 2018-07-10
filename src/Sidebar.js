@@ -2,14 +2,17 @@ import React from 'react'
 
 import UserInfo from './UserInfo'
 import RoomList from './RoomList'
+import RoomForm from './RoomForm'
 
 const Sidebar = (props) => {
+  console.log('display name in Sidebar' + props.user.displayName)
   return (
     <aside className="Sidebar" style={styles.sidebar}>
       <UserInfo signOut={props.signOut} user={props.user} />
       <h1 style={styles.h1}>
         XTBC 18
       </h1>
+      <RoomForm addRoom={props.addRoom} />
       <RoomList setCurrentRoom={props.setCurrentRoom} rooms={props.rooms}/>
     </aside>
   )

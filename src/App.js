@@ -21,7 +21,6 @@ class App extends Component {
             displayName: user.displayName,
             email: user.email,
             uid: user.uid,
-            photoUrl: user.photoURL,
           }
         })
       } else {
