@@ -4,10 +4,12 @@ import base from './base'
 import Sidebar from './Sidebar'
 import Chat from './Chat'
 import Welcome from './Welcome'
+import RoomForm from './RoomForm'
 
 class Main extends Component {
   state = {
     inRoom: false,
+    showRoomForm: false,
     rooms: {},
     room: {}
   }
@@ -18,7 +20,6 @@ class Main extends Component {
       state: `rooms`,
     })
   } 
-
 
   componentWillUnmount = () => {
     base.removeBinding(this.ref)
@@ -44,14 +45,25 @@ class Main extends Component {
       inRoom: true,
       room,
     })
+  }
 
+  showRoomForm = () => {
+    this.setState({ showRoomForm: true })
+  }
+
+  hideRoomForm = () => {
+    this.setState({ showRoomForm: false })
   }
 
   render() {
+    if(this.state.showRoomForm)
+      return (
+        <RoomForm addRoom={this.addRoom} hideRoomForm={this.hideRoomForm}/>
+      )
     let element = this.state.inRoom ? <Chat user={this.props.user} room={this.state.room}/> : <Welcome />
     return (
       <div className="Main" style={styles}>
-        <Sidebar rooms={this.state.rooms} signOut={this.props.signOut} user={this.props.user} setCurrentRoom={this.setCurrentRoom} addRoom={this.addRoom}/>
+        <Sidebar rooms={this.state.rooms} signOut={this.props.signOut} user={this.props.user} setCurrentRoom={this.setCurrentRoom} showRoomForm={this.showRoomForm} />
         {element}
       </div>
     )

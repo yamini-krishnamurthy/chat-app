@@ -2,7 +2,6 @@ import React from 'react'
 
 import UserInfo from './UserInfo'
 import RoomList from './RoomList'
-import RoomForm from './RoomForm'
 
 const Sidebar = (props) => {
   return (
@@ -11,8 +10,7 @@ const Sidebar = (props) => {
       <h1 style={styles.h1}>
         XTBC 18
       </h1>
-      <RoomForm addRoom={props.addRoom} />
-      <RoomList setCurrentRoom={props.setCurrentRoom} rooms={props.rooms}/>
+      <RoomList showRoomForm={props.showRoomForm} setCurrentRoom={props.setCurrentRoom} rooms={props.rooms}/>
     </aside>
   )
 }

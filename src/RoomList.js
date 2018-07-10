@@ -8,13 +8,25 @@ const RoomList = (props) => {
     <nav
       className={`RoomList ${css(styles.roomList)}`}
     >
-      <h2 className={css(styles.h2)}>
-        Rooms
-      </h2>
+      <div className={css(styles.heading)}>
+        <h2 className={css(styles.h2)}>
+          Rooms
+        </h2>
+        <button
+          className={css(styles.button)}
+          onClick={props.showRoomForm}
+        >
+          <i className="fas fa-plus-circle"></i>
+        </button>
+      </div>
       <ul className={css(styles.list)}>
         {
           Object.keys(props.rooms).map(
-            roomName => <Room roomName={roomName} key={roomName} setCurrentRoom={props.setCurrentRoom}/>
+            roomName => <Room
+                          roomName={roomName}
+                          setCurrentRoom={props.setCurrentRoom}
+                          key={roomName}
+                        />
           )
         }
       </ul>
@@ -53,6 +65,27 @@ const styles = StyleSheet.create({
     ':hover': {
       backgroundColor: 'rgba(255, 255, 255, 0.2)',
     },
+  },
+
+  heading: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  button: {
+    border: 0,
+    backgroundColor: 'transparent',
+    outline: 0,
+    padding: 0,
+    color: 'rgba(255,255,255,0.4)',
+    fontSize: '1rem',
+    cursor: 'pointer',
+    transition: 'color 0.25s ease-out',
+
+    ':hover': {
+      color: 'white',
+    }
   },
 })
 
