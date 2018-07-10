@@ -25,6 +25,11 @@ class Main extends Component {
   }
 
   addRoom = (room) => {
+    const roomNames = Object.keys(this.state.rooms)
+    for(let roomName of roomNames) {
+      if(roomName === room.name)
+        alert('That room already exists!')
+    }
     let rooms = {...this.state.rooms}
     rooms[room.name] = room
     this.setState({

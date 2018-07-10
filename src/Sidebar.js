@@ -5,7 +5,6 @@ import RoomList from './RoomList'
 import RoomForm from './RoomForm'
 
 const Sidebar = (props) => {
-  console.log('display name in Sidebar' + props.user.displayName)
   return (
     <aside className="Sidebar" style={styles.sidebar}>
       <UserInfo signOut={props.signOut} user={props.user} />

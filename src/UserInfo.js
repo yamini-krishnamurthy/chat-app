@@ -4,7 +4,6 @@ import Avatar from './Avatar'
 import SignOutButton from './SignOutButton'
 
 const UserInfo = (props) => {
-  console.log('display name in user info: ' + props.user.displayName)
   return (
     <div className="UserInfo" style={styles.userInfo}>
       <Avatar user={props.user}/>
