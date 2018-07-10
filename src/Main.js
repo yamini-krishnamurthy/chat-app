@@ -3,14 +3,13 @@ import base from './base'
 
 import Sidebar from './Sidebar'
 import Chat from './Chat'
+import Welcome from './Welcome'
 
 class Main extends Component {
   state = {
+    inRoom: false,
     rooms: {},
-    room: {
-      name: 'general',
-      description: 'talk about general things', 
-    }
+    room: {}
   }
 
   componentDidMount = () => {
@@ -37,15 +36,18 @@ class Main extends Component {
   setCurrentRoom = (roomName) => {
     const room = this.state.rooms[roomName]
     this.setState({
-      room
+      inRoom: true,
+      room,
     })
+
   }
 
   render() {
+    let element = this.state.inRoom ? <Chat user={this.props.user} room={this.state.room}/> : <Welcome />
     return (
       <div className="Main" style={styles}>
         <Sidebar rooms={this.state.rooms} signOut={this.props.signOut} user={this.props.user} setCurrentRoom={this.setCurrentRoom} addRoom={this.addRoom}/>
-        <Chat user={this.props.user} room={this.state.room}/>
+        {element}
       </div>
     )
   }
