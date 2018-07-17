@@ -1,20 +1,16 @@
 import React, { Component } from 'react'
-import { StyleSheet, css } from 'aphrodite'
 import { Link } from 'react-router-dom'
+import { StyleSheet, css } from 'aphrodite'
 
-import { auth, googleProvider } from './base'
+import { auth } from './base'
 
-class SignIn extends Component {
+class SignUp extends Component {
   state = {
     user: {
       email: '',
       password: '',
     },
     errorMessage: null,
-  }
-
-  authenticate = (provider) => {
-    auth.signInWithPopup(provider)
   }
 
   handleChange = (ev) => {
@@ -25,7 +21,7 @@ class SignIn extends Component {
 
   handleSubmit = (ev) => {
     ev.preventDefault()
-    auth.signInWithEmailAndPassword(
+    auth.createUserWithEmailAndPassword(
       this.state.user.email,
       this.state.user.password
     ).catch(error => this.setState({ errorMessage: error.message }))
@@ -33,7 +29,7 @@ class SignIn extends Component {
 
   render() {
     return (
-      <div className={`SignIn ${css(styles.signIn)}`}>
+      <div className={`SignUp ${css(styles.signIn)}`}>
         <header className={css(styles.header)}>
           <span className={css(styles.title)}>
             <i className="fas fa-hashtag"></i>
@@ -45,7 +41,7 @@ class SignIn extends Component {
             className={css(styles.form)}
             onSubmit={this.handleSubmit}
           >
-            <h2>Sign In</h2>
+            <h2>Sign Up</h2>
 
             <label
               htmlFor="email"
@@ -82,7 +78,7 @@ class SignIn extends Component {
               type="submit"
               className={css(styles.button)}
             >
-              Sign In
+              Sign Up
             </button>
 
             <p className={css(styles.error)}>
@@ -90,33 +86,15 @@ class SignIn extends Component {
             </p>
 
             <p>
-              Not a member yet? <Link to="/sign-up">Sign up</Link>!
+              Already a member? <Link to="/sign-in">Sign in</Link>!
             </p>
-
-            OR
-            <div className={css(styles.buttonGroup)}>
-              <button
-                type="button"
-                className={css(styles.button)}
-                onClick={() => this.authenticate(googleProvider)}
-              >
-                <i className={`fab fa-google ${css(styles.brandIcon)}`}></i>
-                Sign in with Google
-              </button>
-            </div>
           </form>
-
-          <div className="blurb">
-            <h2 className={css(styles.h2)}>
-              You're in good company.
-            </h2>
-            <p>Ones of people are already using Chatarang.</p>
-          </div>
         </main>
       </div>
     )
   }
 }
+
 const styles = StyleSheet.create({
   signIn: {
     display: 'flex',
@@ -124,6 +102,7 @@ const styles = StyleSheet.create({
     height: '100vh',
     backgroundColor: '#f6f6f6',
   },
+
   header: {
     backgroundColor: '#fff',
     height: '4rem',
@@ -133,6 +112,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     boxShadow: '0 1px 1px rgba(0,0,0,.1)',
   },
+
   title: {
     color: '#ff3344',
     fontWeight: 400,
@@ -140,6 +120,7 @@ const styles = StyleSheet.create({
     lineHeight: '80px',
     fontSize: '2rem',
   },
+
   main: {
     flex: 1,
     textAlign: 'center',
@@ -149,6 +130,7 @@ const styles = StyleSheet.create({
     margin: '0 auto',
     paddingBottom: '3rem',
   },
+
   form: {
     width: '40rem',
     backgroundColor: 'white',
@@ -156,11 +138,13 @@ const styles = StyleSheet.create({
     marginBottom: '2rem',
     paddingBottom: '2rem',
   },
+
   label: {
     display: 'block',
     textTransform: 'uppercase',
     color: '#999',
   },
+
   input: {
     width: '20rem',
     fontSize: '1.5rem',
@@ -170,13 +154,16 @@ const styles = StyleSheet.create({
     marginBottom: '1rem',
     textAlign: 'center',
     padding: '0.5rem',
+
     ':focus': {
       outline: 0,
     },
   },
+
   h2: {
     fontWeight: 'normal',
   },
+
   button: {
     display: 'block',
     margin: '0 auto 1rem',
@@ -187,15 +174,25 @@ const styles = StyleSheet.create({
     color: 'white',
     width: '20rem',
   },
+
+  github: {
+    marginBottom: 0,
+    backgroundColor: '#6e5494',
+  },
+
   brandIcon: {
     marginRight: '1rem',
   },
+
   buttonGroup: {
     marginTop: '1rem',
   },
+
   error: {
     color: '#ff3344',
     height: '1.2rem',
   }
 })
-export default SignIn
+
+
+export default SignUp

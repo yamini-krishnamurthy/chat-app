@@ -5,6 +5,7 @@ import './App.css'
 import { auth } from './base'
 import Main from './Main'
 import SignIn from './SignIn'
+import SignUp from './SignUp'
 
 class App extends Component {
   constructor() {
@@ -67,6 +68,14 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
+          <Route
+            path="/sign-up"
+            render={() => (
+              this.signedIn()
+                ? <Redirect to="/chat" />
+                : <SignUp />
+            )}
+          />
           <Route
             path="/sign-in"
             render={() => (
