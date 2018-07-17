@@ -8,7 +8,7 @@ const UserInfo = (props) => {
     <div className="UserInfo" style={styles.userInfo}>
       <Avatar user={props.user}/>
       <div className="user" style={styles.user}>
-        {props.user.displayName}
+        {props.user.displayName || props.user.email}
       </div>
       <SignOutButton signOut={props.signOut}/>
     </div>
