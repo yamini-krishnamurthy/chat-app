@@ -52,15 +52,6 @@ class App extends Component {
     localStorage.removeItem('user')
   }
 
-  setUserState = (email, displayName, uid) => {
-    const user = {
-      displayName: displayName,
-      email: email,
-      uid: uid,
-    }
-    this.handleAuth(user)
-  }
-
   //call the firebase signout function
   signOut = () => {
     auth.signOut()
