@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
 import './App.css'
-import { auth } from './base'
+import base, { auth } from './base'
 import Main from './Main'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
@@ -16,6 +16,7 @@ class App extends Component {
     //if the user is logged in, set the state to that user. if not, set it to an empty object
     this.state = {
       user: user || {},
+      displayName: null,
     }
 
   }
@@ -43,12 +44,44 @@ class App extends Component {
       email: oAuthUser.email,
       photoUrl: oAuthUser.photoURL,
     }
-    this.setState({ user })
+    this.syncUser(user)
     localStorage.setItem('user', JSON.stringify(user))
+  }
+
+  //set user's displayName if the user entered one while signing up
+  syncUser = (user) => {
+    if (this.state.displayName) {
+      user.displayName = this.state.displayName
+    }
+
+    this.userRef = base.syncState(
+      `users/${user.uid}`,
+      {
+        context: this,
+        state: 'user',
+        then: () => this.setState({ user }),
+      }
+    )
+  }
+
+  //sign up function
+  signUp = (user) => {
+    if (user.displayName) {
+      this.setState({ displayName: user.displayName })
+    }
+
+    return auth.createUserWithEmailAndPassword(
+      user.email,
+      user.password
+    )
   }
 
   //remove from state and local storage
   handleUnauth() {
+    if(this.userRef) {
+      base.removeBinding(this.userRef)
+    }
+
     this.setState({ user: {} })
     localStorage.removeItem('user')
   }
@@ -73,7 +106,7 @@ class App extends Component {
             render={() => (
               this.signedIn()
                 ? <Redirect to="/chat" />
-                : <SignUp />
+                : <SignUp signUp={this.signUp} />
             )}
           />
           <Route

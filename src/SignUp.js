@@ -8,7 +8,9 @@ class SignUp extends Component {
   state = {
     user: {
       email: '',
+      displayName: '',
       password: '',
+      passwordConfirmation: '',
     },
     errorMessage: null,
   }
@@ -21,10 +23,19 @@ class SignUp extends Component {
 
   handleSubmit = (ev) => {
     ev.preventDefault()
-    auth.createUserWithEmailAndPassword(
-      this.state.user.email,
-      this.state.user.password
-    ).catch(error => this.setState({ errorMessage: error.message }))
+    if (this.passwordsMatch()) {
+      this.props
+        .signUp(this.state.user)
+        .catch(error => this.setState({ errorMessage: error.message }))
+    }
+  }
+
+  passwordsMatch = () => {
+    if (this.state.user.password !== this.state.user.passwordConfirmation) {
+      this.setState({ errorMessage: 'The passwords you entered do not match.' })
+      return false
+    }
+    return true
   }
 
   render() {
@@ -60,6 +71,20 @@ class SignUp extends Component {
             />
 
             <label
+              htmlFor="displayName"
+              className={css(styles.label)}
+            >
+              Display Name (optional)
+            </label>
+            <input
+              type="text"
+              name="displayName"
+              className={css(styles.input)}
+              value={this.state.user.displayName}
+              onChange={this.handleChange}
+            />
+
+            <label
               htmlFor="password"
               className={css(styles.label)}
             >
@@ -71,6 +96,21 @@ class SignUp extends Component {
               name="password"
               className={css(styles.input)}
               value={this.state.user.password}
+              onChange={this.handleChange}
+            />
+
+            <label
+              htmlFor="passwordConfirmation"
+              className={css(styles.label)}
+            >
+              Re-type Password
+            </label>
+            <input
+              required
+              type="password"
+              name="passwordConfirmation"
+              className={css(styles.input)}
+              value={this.state.user.passwordConfirmation}
               onChange={this.handleChange}
             />
 
