@@ -18,9 +18,9 @@ class RoomForm extends Component {
   }
 
   handleSubmit = (event) => {
-    event.preventDefault()
-    this.props.addRoom(this.state.room) 
-    this.props.hideRoomForm()
+    event.preventDefault()              //stop the form from refreshing on submit
+    this.props.addRoom(this.state.room) //add the room to the list of rooms in Main
+    this.props.history.goBack()         //exit the add room form page
   }
 
   render() {
@@ -70,7 +70,7 @@ class RoomForm extends Component {
               <button
                 type="button"
                 className={css(styles.button, styles.cancel)}
-                onClick={this.props.hideRoomForm}
+                onClick={this.props.history.goBack}
               >
                 Cancel
               </button>

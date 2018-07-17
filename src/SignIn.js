@@ -4,6 +4,7 @@ import { auth, googleProvider } from './base'
 
 import SignInWithPassword from './SignInWithPassword'
 
+//give users the option to sign in using google and email and password
 class SignIn extends Component {
   handleGoogle = ()  => {
     auth.signInWithPopup(googleProvider)

@@ -10,7 +10,7 @@ const Sidebar = (props) => {
       <h1 style={styles.h1}>
         XTBC 18
       </h1>
-      <RoomList showRoomForm={props.showRoomForm} setCurrentRoom={props.setCurrentRoom} rooms={props.rooms}/>
+      <RoomList rooms={props.rooms}/>
     </aside>
   )
 }

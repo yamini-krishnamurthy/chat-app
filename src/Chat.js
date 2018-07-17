@@ -10,33 +10,33 @@ class Chat extends Component {
     super()
     this.state = {
       messages: [],
-      binding: null,
     }
   }
 
-  componentWillMount = () => {
-    this.changeMessages()
+  //load messages when chat window is first rendered
+  componentDidMount = () => {
+    this.syncMessages()
   }
 
+  //when the room changes, sync the messages with the new room 
   componentDidUpdate = (prevProps) =>{
     if(prevProps.room.name !== this.props.room.name) {
-      this.changeMessages()
+      this.syncMessages()
     }
   }
 
-  changeMessages = () => {
-    if(this.state.binding)
-      base.removeBinding(this.state.binding)
-    const binding = base.syncState(`messages/${this.props.room.name}`, {
+  //remove current room's message binding, and add sync the new room's message binding
+  syncMessages = () => {
+    if(this.messagesRef)
+      base.removeBinding(this.messagesRef)
+    this.messagesRef = base.syncState(`messages/${this.props.room.name}`, {
       context: this,
       state: 'messages',
       asArray: true,
     })
-    this.setState({ 
-      binding,
-    })
   }
 
+  //add a message to state
   addMessage = (body) => {
     const messages = [...this.state.messages]
     const user = this.props.user
@@ -52,8 +52,8 @@ class Chat extends Component {
   render() {
     return (
       <div className="chat" style={styles.chat}>
-        <ChatHeader room={this.props.room}/>
-        <MessageList room={this.props.room} messages={this.state.messages} user={this.props.user}/>
+        <ChatHeader removeRoom={this.props.removeRoom} room={this.props.room}/>
+        <MessageList room={this.props.room} messages={this.state.messages}/>
         <MessageForm addMessage={this.addMessage}/>
       </div>
     )
