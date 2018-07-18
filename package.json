@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "aphrodite": "^2.2.2",
+    "emoji-mart": "^2.6.1",
     "firebase": "^5.2.0",
     "firebase-tools": "^3.19.3",
     "moment": "^2.22.2",
