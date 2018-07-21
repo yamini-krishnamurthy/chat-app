@@ -25,13 +25,20 @@ class Message extends Component {
   }
 
   render() {
+    const { message } = this.props
     return (
       <div className={`Message ${css(styles.message)}`}>
-        <Avatar user={this.props.message.user} />
+        <Avatar user={message.user} />
         <div className={css(styles.details)}>
-          <Metadata message={this.props.message} />
+          <Metadata message={message} />
           <div className="body">
-            {this.props.message.body}
+            {message.body}
+          </div>
+          <div className="reactions">
+            { message.reactions && Object.keys(message.reactions).map(emoji => (
+              <Reaction key={emoji} emoji={emoji} message={message} hasReacted={this.props.hasReacted} />
+            )
+            )}
           </div>
           <button className={`reactionButton ${css(styles.reactionButton)}`} onClick={this.togglePicker}>
             <i className="far fa-smile"></i>
@@ -45,12 +52,6 @@ class Message extends Component {
               onSelect={this.handleEmojiClick}
             />
         }
-        <div className="reactions">
-          { this.props.message.reactions && Object.keys(this.props.message.reactions).map(emoji => (
-            <Reaction key={emoji} emoji={emoji} numOfReactions={this.props.message.reactions[emoji].length} />
-          )
-          )}
-        </div>  
       </div>
     )
   }

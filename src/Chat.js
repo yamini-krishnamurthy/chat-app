@@ -83,7 +83,6 @@ class Chat extends Component {
   }
 
   hasReacted = (message, emoji) => {
-    const messages = [...this.state.messages]
     message.reactions = message.reactions || {}
     message.reactions[emoji] = message.reactions[emoji] || []
 
