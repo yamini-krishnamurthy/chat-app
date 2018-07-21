@@ -20,7 +20,7 @@ class Message extends Component {
 
   handleEmojiClick = (emoji) => {
     console.log(emoji.colons)
-    this.props.addReaction(this.props.message, emoji.colons)
+    this.props.hasReacted(this.props.message, emoji.colons)
     this.togglePicker()
   }
 
@@ -46,8 +46,8 @@ class Message extends Component {
             />
         }
         <div className="reactions">
-          { this.props.message.reactions && Object.keys(this.props.message.reactions).map(emojiColon => (
-            <Reaction emojiColon={emojiColon} numOfReactions={this.props.message.reactions[emojiColon]} />
+          { this.props.message.reactions && Object.keys(this.props.message.reactions).map(emoji => (
+            <Reaction emoji={emoji} numOfReactions={this.props.message.reactions[emoji].length} />
           )
           )}
         </div>  

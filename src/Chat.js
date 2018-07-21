@@ -49,35 +49,59 @@ class Chat extends Component {
     })
   }
 
-  addReaction = (message, emojiColon) => {
+  addReaction = (message, emoji) => {
     const messages = [...this.state.messages]
+    message.reactions = message.reactions || {}
+    message.reactions[emoji] = message.reactions[emoji] || []
 
-    let reactions = message.reactions || {}
+    message.reactions[emoji].push(this.props.user)
 
-    if(Object.keys(reactions).indexOf(emojiColon) == -1) {
-      reactions[emojiColon] = 1
-    }
+    const i = messages.findIndex(msg => msg.id === message.id)
+    messages[i] = message
+      
+    this.setState({
+      messages,
+    })
+  }
 
-    else {
-      reactions[emojiColon]++
-    }
+  removeReaction = (message, emoji) => {
+    const messages = [...this.state.messages]
+    message.reactions = message.reactions || {}
+    message.reactions[emoji] = message.reactions[emoji] || []
 
-    console.log(reactions)
-    message.reactions = reactions
+    const i = message.reactions[emoji].findIndex(user =>
+      JSON.stringify(user) === JSON.stringify(this.props.user)
+    )
+    message.reactions[emoji].splice(i, 1)
+    
+    const j = messages.findIndex(msg => msg.id === message.id)
+    messages[j] = message
 
     this.setState({
       messages,
     })
-    
+  }
 
+  hasReacted = (message, emoji) => {
+    const messages = [...this.state.messages]
+    message.reactions = message.reactions || {}
+    message.reactions[emoji] = message.reactions[emoji] || []
 
+    const i = message.reactions[emoji].findIndex(user => 
+      JSON.stringify(user) === JSON.stringify(this.props.user)
+    )
+
+    if(i === -1) 
+      this.addReaction(message, emoji)
+    else
+      this.removeReaction(message, emoji)
   }
 
   render() {
     return (
       <div className="chat" style={styles.chat}>
         <ChatHeader removeRoom={this.props.removeRoom} room={this.props.room}/>
-        <MessageList room={this.props.room} messages={this.state.messages} addReaction={this.addReaction}/>
+        <MessageList room={this.props.room} messages={this.state.messages} hasReacted={this.hasReacted}/>
         <MessageForm addMessage={this.addMessage}/>
       </div>
     )
