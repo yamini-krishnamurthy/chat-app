@@ -17,6 +17,11 @@ class Message extends Component {
     })
   }
 
+  showEmoji = (emoji) => {
+    console.log(emoji.native)
+    this.togglePicker()
+  }
+
   render() {
     return (
       <div className={`Message ${css(styles.message)}`}>
@@ -32,7 +37,11 @@ class Message extends Component {
         </div>  
         {
           this.state.showPicker && 
-            <Picker showPreview={false} />
+            <Picker 
+              showPreview={false} 
+              style={pickerStyles}              
+              onSelect={this.showEmoji}
+            />
         }
       </div>
     )
@@ -72,6 +81,13 @@ const styles = StyleSheet.create({
       color: '#3366ff',
     },
   },
+
 })
+
+const pickerStyles = {
+  position: 'absolute',
+  top: '-20rem',
+  right: '2rem',
+}
 
 export default Message
