@@ -49,11 +49,35 @@ class Chat extends Component {
     })
   }
 
+  addReaction = (message, emojiColon) => {
+    const messages = [...this.state.messages]
+
+    let reactions = message.reactions || {}
+
+    if(Object.keys(reactions).indexOf(emojiColon) == -1) {
+      reactions[emojiColon] = 1
+    }
+
+    else {
+      reactions[emojiColon]++
+    }
+
+    console.log(reactions)
+    message.reactions = reactions
+
+    this.setState({
+      messages,
+    })
+    
+
+
+  }
+
   render() {
     return (
       <div className="chat" style={styles.chat}>
         <ChatHeader removeRoom={this.props.removeRoom} room={this.props.room}/>
-        <MessageList room={this.props.room} messages={this.state.messages}/>
+        <MessageList room={this.props.room} messages={this.state.messages} addReaction={this.addReaction}/>
         <MessageForm addMessage={this.addMessage}/>
       </div>
     )

@@ -5,6 +5,7 @@ import { Picker } from 'emoji-mart'
 
 import Avatar from './Avatar'
 import Metadata from './Metadata'
+import Reaction from './Reaction'
 
 class Message extends Component {
   state = {
@@ -17,8 +18,9 @@ class Message extends Component {
     })
   }
 
-  showEmoji = (emoji) => {
-    console.log(emoji.native)
+  handleEmojiClick = (emoji) => {
+    console.log(emoji.colons)
+    this.props.addReaction(this.props.message, emoji.colons)
     this.togglePicker()
   }
 
@@ -40,9 +42,15 @@ class Message extends Component {
             <Picker 
               showPreview={false} 
               style={pickerStyles}              
-              onSelect={this.showEmoji}
+              onSelect={this.handleEmojiClick}
             />
         }
+        <div className="reactions">
+          { this.props.message.reactions && Object.keys(this.props.message.reactions).map(emojiColon => (
+            <Reaction emojiColon={emojiColon} numOfReactions={this.props.message.reactions[emojiColon]} />
+          )
+          )}
+        </div>  
       </div>
     )
   }
