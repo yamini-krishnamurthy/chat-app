@@ -47,7 +47,7 @@ class Message extends Component {
         }
         <div className="reactions">
           { this.props.message.reactions && Object.keys(this.props.message.reactions).map(emoji => (
-            <Reaction emoji={emoji} numOfReactions={this.props.message.reactions[emoji].length} />
+            <Reaction key={emoji} emoji={emoji} numOfReactions={this.props.message.reactions[emoji].length} />
           )
           )}
         </div>  
