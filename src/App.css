@@ -3,3 +3,9 @@
 body {
   font-family: "Cabin";
 }
+
+.reacted {
+  background-color: #d4e1f4;
+  border: 1px solid #3399ff !important;
+  color: #3399ff !important;
+}

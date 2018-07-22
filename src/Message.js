@@ -20,7 +20,7 @@ class Message extends Component {
 
   handleEmojiClick = (emoji) => {
     console.log(emoji.colons)
-    this.props.hasReacted(this.props.message, emoji.colons)
+    this.props.addOrRemoveReaction(this.props.message, emoji.colons)
     this.togglePicker()
   }
 
@@ -34,9 +34,9 @@ class Message extends Component {
           <div className="body">
             {message.body}
           </div>
-          <div className="reactions">
+          <div className={css(styles.reactions)}>
             { message.reactions && Object.keys(message.reactions).map(emoji => (
-              <Reaction key={emoji} emoji={emoji} message={message} hasReacted={this.props.hasReacted} />
+              <Reaction key={emoji} emoji={emoji} message={message} addOrRemoveReaction={this.props.addOrRemoveReaction} hasReacted={this.props.hasReacted} />
             )
             )}
           </div>
@@ -89,6 +89,11 @@ const styles = StyleSheet.create({
     ':hover': {
       color: '#3366ff',
     },
+  },
+
+  reactions: {
+    display: 'flex',
+    marginTop: '0.5rem',
   },
 
 })

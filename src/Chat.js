@@ -90,7 +90,16 @@ class Chat extends Component {
       JSON.stringify(user) === JSON.stringify(this.props.user)
     )
 
-    if(i === -1) 
+    if(i === -1) { 
+      return false
+    }
+    else {
+      return true
+    }
+  }
+
+  addOrRemoveReaction = (message, emoji) => {
+    if(!this.hasReacted(message, emoji))
       this.addReaction(message, emoji)
     else
       this.removeReaction(message, emoji)
@@ -100,7 +109,7 @@ class Chat extends Component {
     return (
       <div className="chat" style={styles.chat}>
         <ChatHeader removeRoom={this.props.removeRoom} room={this.props.room}/>
-        <MessageList room={this.props.room} messages={this.state.messages} hasReacted={this.hasReacted}/>
+        <MessageList room={this.props.room} messages={this.state.messages} addOrRemoveReaction={this.addOrRemoveReaction} hasReacted={this.hasReacted}/>
         <MessageForm addMessage={this.addMessage}/>
       </div>
     )

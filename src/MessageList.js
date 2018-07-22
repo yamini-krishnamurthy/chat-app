@@ -22,7 +22,7 @@ class MessageList extends Component {
           <p>This is the very beginning of the #{this.props.room.name} room.</p>
         </div>
         {this.props.messages.map(msg => (
-          <Message key={msg.id} message={msg} hasReacted={this.props.hasReacted} /> 
+          <Message key={msg.id} message={msg} addOrRemoveReaction={this.props.addOrRemoveReaction} hasReacted={this.props.hasReacted} /> 
         ))}
         <div ref={el => this.messagesEnd = el}></div>
       </div>
