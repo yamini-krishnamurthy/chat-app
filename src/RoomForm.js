@@ -6,12 +6,18 @@ class RoomForm extends Component {
     room: {
       name: '',
       description: '', 
+      private: false,
+      users: [],
     }
   }
 
   handleChange = (event) => {
     let room = {...this.state.room}
-    room[event.target.name] = event.target.value
+    const target = event.target
+    
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    room[target.name] = value
+    
     this.setState({
       room,
     })
@@ -32,6 +38,20 @@ class RoomForm extends Component {
             className={css(styles.form)}
             onSubmit={this.handleSubmit}
           >
+            <p>
+              <label
+                className={css(styles.label)}
+              >
+                Private
+                <input
+                  type="checkbox"
+                  name="private"
+                  checked={this.state.room.public}
+                  onChange={this.handleChange}
+                />
+              </label>
+            </p>
+
             <p>
               <label
                 htmlFor="name"
@@ -65,6 +85,26 @@ class RoomForm extends Component {
                 onChange={this.handleChange}
               />
             </p>
+
+            {
+              this.state.room.private && (
+                <p>
+                  <label
+                    htmlFor="users"
+                    className={css(styles.label)}
+                  >
+                    Users to add
+                  </label>
+                  <input
+                    type="text"
+                    name="users"
+                    className={css(styles.input)}
+                    value={this.state.room.users}
+                    onChange={this.handleChange}
+                  />
+                </p>
+              )
+            }
 
             <div className={css(styles.buttonContainer)}>
               <button
