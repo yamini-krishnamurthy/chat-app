@@ -17,6 +17,7 @@ class App extends Component {
     this.state = {
       user: user || {},
       displayName: null,
+      users: {},
     }
 
   }
@@ -54,12 +55,15 @@ class App extends Component {
       user.displayName = this.state.displayName
     }
 
+    const users = {...this.state.users}
+    users[user.uid] = user
+
     this.userRef = base.syncState(
       `users/${user.uid}`,
       {
         context: this,
         state: 'user',
-        then: () => this.setState({ user }),
+        then: () => this.setState({ users, user }),
       }
     )
   }
