@@ -42,7 +42,7 @@ class SignUp extends Component {
         <header className={css(styles.header)}>
           <span className={css(styles.title)}>
             <i className="fas fa-hashtag"></i>
-            Chatarang
+            spoopy
           </span>
         </header>
         <main className={css(styles.main)}>

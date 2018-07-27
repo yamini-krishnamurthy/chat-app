@@ -17,7 +17,6 @@ class App extends Component {
     this.state = {
       user: user || {},
       displayName: null,
-      users: {},
     }
 
   }
@@ -55,15 +54,12 @@ class App extends Component {
       user.displayName = this.state.displayName
     }
 
-    const users = {...this.state.users}
-    users[user.uid] = user
-
     this.userRef = base.syncState(
       `users/${user.uid}`,
       {
         context: this,
         state: 'user',
-        then: () => this.setState({ users, user }),
+        then: () => this.setState({ user }),
       }
     )
   }
@@ -128,7 +124,6 @@ class App extends Component {
                 ? <Main
                     user={this.state.user}
                     signOut={this.signOut}
-                    users={this.state.users}
                     {...navProps}
                   />
                 : <Redirect to="/sign-in" />
