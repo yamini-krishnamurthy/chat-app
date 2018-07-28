@@ -26,7 +26,12 @@ class App extends Component {
     auth.onAuthStateChanged(
       user => {
         if (user) {
-          //user is signed in
+          if(!this.userRef) {
+            this.userRef = base.syncState(`users/${user.uid}`, {
+            context: this,
+            state: 'user',
+          })
+          }
           this.handleAuth(user)
         } else {
           //user is signed out
@@ -53,27 +58,17 @@ class App extends Component {
     if (this.state.displayName) {
       user.displayName = this.state.displayName
     }
-
-    this.userRef = base.syncState(
-      `users/${user.uid}`,
-      {
-        context: this,
-        state: 'user',
-        then: () => this.setState({ user }),
-      }
-    )
+    this.setState({ user })
   }
 
   //sign up function
   signUp = (user) => {
-    if (user.displayName) {
-      this.setState({ displayName: user.displayName })
-    }
-
     return auth.createUserWithEmailAndPassword(
       user.email,
       user.password
-    )
+    ).then(credential => {
+      return credential.user.updateProfile({displayName: user.displayName});
+    })
   }
 
   //remove from state and local storage
