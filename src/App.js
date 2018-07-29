@@ -44,10 +44,9 @@ class App extends Component {
   //add to state and local storage
   handleAuth(oAuthUser) {
     const user = {
-      uid: oAuthUser.uid,
       displayName: oAuthUser.displayName,
       email: oAuthUser.email,
-      photoUrl: oAuthUser.photoURL,
+      uid: oAuthUser.uid,
     }
     this.syncUser(user)
     localStorage.setItem('user', JSON.stringify(user))
