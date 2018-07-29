@@ -19,7 +19,6 @@ class Message extends Component {
   }
 
   handleEmojiClick = (emoji) => {
-    console.log(emoji.colons)
     this.props.addOrRemoveReaction(this.props.message, emoji.colons)
     this.togglePicker()
   }

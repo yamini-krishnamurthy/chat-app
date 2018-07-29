@@ -85,7 +85,6 @@ class Chat extends Component {
   hasReacted = (message, emoji) => {
     message.reactions = message.reactions || {}
     message.reactions[emoji] = message.reactions[emoji] || []
-    console.log(JSON.stringify(this.props.user))
     const i = message.reactions[emoji].findIndex(user => {
       return deepEqual(user, this.props.user)
     })
