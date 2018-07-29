@@ -16,6 +16,7 @@ class App extends Component {
     //if the user is logged in, set the state to that user. if not, set it to an empty object
     this.state = {
       user: user || {},
+      users: {},
       displayName: null,
     }
 
@@ -23,15 +24,13 @@ class App extends Component {
 
   //listener for change in auth state
   componentDidMount() {
+    base.syncState('users', {
+      context: this,
+      state: 'users',
+    })
     auth.onAuthStateChanged(
       user => {
         if (user) {
-          if(!this.userRef) {
-            this.userRef = base.syncState(`users/${user.uid}`, {
-            context: this,
-            state: 'user',
-          })
-          }
           this.handleAuth(user)
         } else {
           //user is signed out
@@ -44,9 +43,9 @@ class App extends Component {
   //add to state and local storage
   handleAuth(oAuthUser) {
     const user = {
+      uid: oAuthUser.uid,
       displayName: oAuthUser.displayName,
       email: oAuthUser.email,
-      uid: oAuthUser.uid,
     }
     this.syncUser(user)
     localStorage.setItem('user', JSON.stringify(user))
@@ -57,11 +56,21 @@ class App extends Component {
     if (this.state.displayName) {
       user.displayName = this.state.displayName
     }
-    this.setState({ user })
+    this.setState({ user }, () => this.syncUsers(user))
+  }
+
+  syncUsers = (user) => {
+    const users = {...this.state.users}
+    users[user.uid] = user
+    this.setState({ users })
   }
 
   //sign up function
   signUp = (user) => {
+    if(user.displayName) {
+      this.setState({ displayName: user.displayName })
+    }
+
     return auth.createUserWithEmailAndPassword(
       user.email,
       user.password
