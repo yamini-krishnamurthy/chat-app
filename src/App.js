@@ -24,10 +24,6 @@ class App extends Component {
 
   //listener for change in auth state
   componentDidMount() {
-    base.syncState('users', {
-      context: this,
-      state: 'users',
-    })
     auth.onAuthStateChanged(
       user => {
         if (user) {
@@ -38,6 +34,10 @@ class App extends Component {
         }
       }
     )
+    this.usersRef = base.syncState('users', {
+      context: this,
+      state: 'users',
+    })
   }
 
   //add to state and local storage
@@ -81,11 +81,7 @@ class App extends Component {
 
   //remove from state and local storage
   handleUnauth() {
-    if(this.userRef) {
-      base.removeBinding(this.userRef)
-    }
-
-    this.setState({ user: {} })
+    this.setState({ user: {}, displayName: null, })
     localStorage.removeItem('user')
   }
 
@@ -97,6 +93,10 @@ class App extends Component {
   //check for existence of state's user's id to check for sign in status
   signedIn = () => {
     return this.state.user.uid
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.usersRef)
   }
 
   //figure out how to comment in render method
@@ -126,6 +126,7 @@ class App extends Component {
               this.signedIn()
                 ? <Main
                     user={this.state.user}
+                    users={this.state.users}
                     signOut={this.signOut}
                     {...navProps}
                   />
@@ -138,6 +139,7 @@ class App extends Component {
               this.signedIn()
                 ? <Main
                     user={this.state.user}
+                    users={this.state.users}
                     signOut={this.signOut}
                     {...navProps}
                   />

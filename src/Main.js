@@ -12,6 +12,7 @@ class Main extends Component {
     room: {
       name: 'general',
       description: 'Chat about stuff',
+      private: false,
     },
     rooms: {},
   }

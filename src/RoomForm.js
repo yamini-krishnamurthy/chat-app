@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, css } from 'aphrodite'
+import Select from 'react-select'
 
 class RoomForm extends Component {
   state = {
@@ -21,6 +22,25 @@ class RoomForm extends Component {
     this.setState({
       room,
     })
+  }
+
+  handleSelectChange = (selectedValue) => {
+    const room = {...this.state.room}
+    room.users = selectedValue
+    this.setState({ room })
+  }
+
+  users = () => {
+    console.log(this.props.users)
+    return Object.keys(this.props.users).map(
+      uid => {
+        const user = this.props.users[uid]
+        return {
+          value: uid,
+          label: `${user.displayName} (${user.email})`,
+        }
+      }
+    )
   }
 
   handleSubmit = (event) => {
@@ -88,21 +108,22 @@ class RoomForm extends Component {
 
             {
               this.state.room.private && (
-                <p>
+                <div>
                   <label
                     htmlFor="users"
                     className={css(styles.label)}
                   >
                     Users to add
                   </label>
-                  <input
-                    type="text"
-                    name="users"
-                    className={css(styles.input)}
+                  <Select 
+                    name="users"                    
+                    isMulti
+                    onChange={this.handleSelectChange}
                     value={this.state.room.users}
-                    onChange={this.handleChange}
+                    className={css(styles.input)}
+                    options={this.users()}
                   />
-                </p>
+                </div>
               )
             }
 
