@@ -9,11 +9,7 @@ import RoomForm from './RoomForm'
 class Main extends Component {
   state = {
     //set a current room by default
-    room: {
-      name: 'general',
-      description: 'Chat about stuff',
-      private: false,
-    },
+    room: {},
     rooms: {},
   }
 
@@ -25,12 +21,6 @@ class Main extends Component {
       {
         context: this,
         state: 'rooms',
-        defaultValue: {
-          general: {
-            name: 'general',
-            description: 'Chat about stuff',
-          },
-        },
         //after the state is synced, load the current room
         then: this.setRoomFromRoute,
       }
@@ -55,6 +45,28 @@ class Main extends Component {
     const { roomName } = this.props.match.params
     if(roomName)
       this.setCurrentRoom(roomName)
+  }
+
+  filterRooms = () => {
+    const roomNames = this.filterRoomNames()
+    const memberRooms = {}
+    for(let roomName of roomNames) {
+      memberRooms[roomName] = this.state.rooms[roomName]
+    }
+    return memberRooms
+  }
+
+  filterRoomNames = () => {
+    return Object.keys(this.state.rooms).filter(roomName => {
+      const room = this.state.rooms[roomName]
+      if(!room)  return false
+      return !room.private || this.includesCurrentUser(room)
+    })
+  }
+
+  includesCurrentUser = (room) => {  
+    const users = room.users
+    return users.find(user => user.value === this.props.user.uid)
   }
 
   //add a room to list of rooms
@@ -108,6 +120,7 @@ class Main extends Component {
               <RoomForm
                 addRoom={this.addRoom}
                 users={this.props.users}
+                user={this.props.user}
                 {...navProps}
               />
             )}
@@ -119,7 +132,7 @@ class Main extends Component {
                 <Sidebar
                   user={this.props.user}
                   signOut={this.props.signOut}
-                  rooms={this.state.rooms}
+                  rooms={this.filterRooms()}
                 />
                 <Chat
                   user={this.props.user}

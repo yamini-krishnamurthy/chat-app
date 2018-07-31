@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { StyleSheet, css } from 'aphrodite'
 import { Link } from 'react-router-dom'
 
 import Room from './Room'
 
-const RoomList = ({ rooms }) => {
+class RoomList extends Component {
+  render() {
   return (
     <nav
       className={`RoomList ${css(styles.roomList)}`}
@@ -22,7 +23,7 @@ const RoomList = ({ rooms }) => {
       </div>
       <ul className={css(styles.list)}>
         {
-          Object.keys(rooms).map(
+          Object.keys(this.props.rooms).map(
             roomName => <Room
                           roomName={roomName}
                           key={roomName}
@@ -32,6 +33,7 @@ const RoomList = ({ rooms }) => {
       </ul>
     </nav>
   )
+  }
 }
 
 const styles = StyleSheet.create({

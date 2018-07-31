@@ -26,12 +26,19 @@ class RoomForm extends Component {
 
   handleSelectChange = (selectedValue) => {
     const room = {...this.state.room}
-    room.users = selectedValue
+    const users = selectedValue.slice()
+    users.push({
+      value: this.props.user.uid,
+      label: `${this.props.user.displayName} (${this.props.user.email})`,
+    })
+    room.users = users
+    console.log(selectedValue)
     this.setState({ room })
   }
 
   users = () => {
-    console.log(this.props.users)
+    const { users } = this.props
+    delete users[this.props.user.uid]
     return Object.keys(this.props.users).map(
       uid => {
         const user = this.props.users[uid]
