@@ -90,7 +90,7 @@ class Main extends Component {
 
   //set the current room given the room name (IF THE ROOM EXISTS!)
   setCurrentRoom = roomName => {
-    const room = this.state.rooms[roomName]
+    const room = this.filterRooms()[roomName]
 
     if (room) {
       //a valid room name wasn't passed
@@ -103,7 +103,7 @@ class Main extends Component {
 
   //load the first room in the list of rooms as long as the list has rooms
   loadValidRoom = () => {
-    const roomNames = Object.keys(this.state.rooms)
+    const roomNames = Object.keys(this.filterRooms())
     if (roomNames.length > 0) {
       const roomName = roomNames[0]
       this.props.history.push(`/chat/rooms/${roomName}`)
