@@ -9,7 +9,10 @@ import RoomForm from './RoomForm'
 class Main extends Component {
   state = {
     //set a current room by default
-    room: {},
+    room: {
+      name: 'general',
+      description: 'Chat about stuff',
+    },
     rooms: {},
   }
 
@@ -21,6 +24,12 @@ class Main extends Component {
       {
         context: this,
         state: 'rooms',
+        defaultValue: {
+          general: {
+            name: 'general',
+            description: 'Chat about stuff',
+          },
+        },
         //after the state is synced, load the current room
         then: this.setRoomFromRoute,
       }
@@ -30,6 +39,8 @@ class Main extends Component {
   //if the page is re-rendered, AND the current room has changed, then we set the current room in main's state
   componentDidUpdate(prevProps) {
     const { roomName } = this.props.match.params
+    console.log(prevProps.match.params.roomName)
+    console.log(roomName)
     if (prevProps.match.params.roomName !== roomName) {
       this.setRoomFromRoute()
     }
@@ -72,8 +83,13 @@ class Main extends Component {
   //add a room to list of rooms
   addRoom = (room) => {
     const rooms = {...this.state.rooms}
+    if(room.private) {
+      room.users.push({
+        label: this.props.user.displayName === null ? `${this.props.user.email}` : `${this.props.user.displayName} (${this.props.user.email})`,
+        value: this.props.user.uid
+      })
+    }
     rooms[room.name] = room
-
     this.setState({ rooms })
   }
 
@@ -91,7 +107,6 @@ class Main extends Component {
   //set the current room given the room name (IF THE ROOM EXISTS!)
   setCurrentRoom = roomName => {
     const room = this.filterRooms()[roomName]
-
     if (room) {
       //a valid room name wasn't passed
       this.setState({ room })

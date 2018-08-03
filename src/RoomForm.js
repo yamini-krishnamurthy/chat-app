@@ -26,13 +26,7 @@ class RoomForm extends Component {
 
   handleSelectChange = (selectedValue) => {
     const room = {...this.state.room}
-    const users = selectedValue.slice()
-    users.push({
-      value: this.props.user.uid,
-      label: `${this.props.user.displayName} (${this.props.user.email})`,
-    })
-    room.users = users
-    console.log(selectedValue)
+    room.users = selectedValue
     this.setState({ room })
   }
 
@@ -42,9 +36,10 @@ class RoomForm extends Component {
     return Object.keys(this.props.users).map(
       uid => {
         const user = this.props.users[uid]
+        console.log(user.displayName)
         return {
           value: uid,
-          label: `${user.displayName} (${user.email})`,
+          label: user.displayName === undefined ? `${user.email}` : `${user.displayName} (${user.email})`
         }
       }
     )
@@ -53,7 +48,7 @@ class RoomForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault()              //stop the form from refreshing on submit
     this.props.addRoom(this.state.room) //add the room to the list of rooms in Main
-    this.props.history.goBack()         //exit the add room form page
+    this.props.history.push(`/chat/rooms/${this.state.room.name}`)         //exit the add room form page
   }
 
   render() {
