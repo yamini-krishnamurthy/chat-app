@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import { StyleSheet, css } from 'aphrodite'
 import Select from 'react-select'
 
-class RoomForm extends Component {
+class DirectMessageForm extends Component {
   state = {
     room: {
       name: '',
-      description: '', 
-      dm: false,
-      private: false,
+      description: 'Direct Message', 
+      dm: true,
+      private: true,
       users: [],
     }
   }
@@ -16,8 +16,7 @@ class RoomForm extends Component {
   handleChange = (event) => {
     let room = {...this.state.room}
     const target = event.target
-    
-    const value = target.type === 'checkbox' ? target.checked : target.value
+
     room[target.name] = value
     
     this.setState({
@@ -27,8 +26,13 @@ class RoomForm extends Component {
 
   handleSelectChange = (selectedValue) => {
     const room = {...this.state.room}
-    room.users = selectedValue
-    this.setState({ room })
+    if(room.users.length === 1) {
+      return
+    }
+    else {
+      room.users = selectedValue
+      this.setState({ room }) 
+    }
   }
 
   users = () => {
@@ -56,80 +60,27 @@ class RoomForm extends Component {
     return (
       <div className={`RoomForm ${css(styles.roomForm)}`}>
         <main className={css(styles.main)}>
-          <h2 className={css(styles.title)}>Create a room</h2>
+          <h2 className={css(styles.title)}>Start a conversation</h2>
           <form
             className={css(styles.form)}
             onSubmit={this.handleSubmit}
           >
-            <p>
+            <div>
               <label
+                htmlFor="users"
                 className={css(styles.label)}
               >
-                Private
-                <input
-                  type="checkbox"
-                  name="private"
-                  checked={this.state.room.public}
-                  onChange={this.handleChange}
-                />
+                Start a conversation
               </label>
-            </p>
-
-            <p>
-              <label
-                htmlFor="name"
-                className={css(styles.label)}
-              >
-                Room Name
-              </label>
-              <input
-                autoFocus
-                required
-                type="text"
-                name="name"
-                className={css(styles.input, styles.textInput)}
-                value={this.state.room.name}
-                onChange={this.handleChange}
+              <Select 
+                name="users"                    
+                isMulti
+                onChange={this.handleSelectChange}
+                value={this.state.room.users}
+                className={css(styles.input)}
+                options={this.users()}
               />
-            </p>
-
-            <p>
-              <label
-                htmlFor="description"
-                className={css(styles.label)}
-              >
-                Description
-              </label>
-              <input
-                type="text"
-                name="description"
-                className={css(styles.input, styles.textInput)}
-                value={this.state.room.description}
-                onChange={this.handleChange}
-              />
-            </p>
-
-            {
-              this.state.room.private && (
-                <div>
-                  <label
-                    htmlFor="users"
-                    className={css(styles.label)}
-                  >
-                    Users to add
-                  </label>
-                  <Select 
-                    name="users"                    
-                    isMulti
-                    onChange={this.handleSelectChange}
-                    value={this.state.room.users}
-                    className={css(styles.input)}
-                    options={this.users()}
-                  />
-                </div>
-              )
-            }
-
+            </div>
             <div className={css(styles.buttonContainer)}>
               <button
                 type="button"
@@ -143,7 +94,7 @@ class RoomForm extends Component {
                 type="submit"
                 className={css(styles.button)}
               >
-                Create Room
+                Go
               </button>
             </div>
           </form>
@@ -240,4 +191,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default RoomForm
+export default DirectMessageForm
